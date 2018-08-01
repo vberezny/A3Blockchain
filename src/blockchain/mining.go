@@ -1,9 +1,5 @@
 package blockchain
 
-import (
-	"work_queue"
-)
-
 type miningWorker struct {
 	// TODO. Should implement work_queue.Worker
 }
