@@ -1,1 +1,3 @@
-# A3Blockchain
+# CMPT 383 Assignment #3
+
+## Blockchain
