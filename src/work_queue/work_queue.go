@@ -33,7 +33,6 @@ func (queue WorkQueue) worker() {
 		// TODO: listen on the .Jobs channel for incoming tasks
 		tasks := <-queue.Jobs
 		// TODO: run tasks by calling .Run()
-		// results := tasks.Run()
 		// TODO: send the return value back on Results channel
 		queue.Results <- tasks.Run()
 		// TODO: exit (return) when a signal is sent on StopRequests
