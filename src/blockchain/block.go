@@ -1,5 +1,9 @@
 package blockchain
 
+import (
+	"fmt"
+)
+
 type Block struct {
 	Generation uint64
 	Difficulty uint8
@@ -11,7 +15,21 @@ type Block struct {
 
 // Create new initial (generation 0) block.
 func Initial(difficulty uint8) Block {
-	// TODO
+	blk := new(Block)
+	arr := make([]byte, 32)
+	
+	for i := 0; i < 32; i++{
+		arr[i] = byte(0)
+		fmt.Println(arr[i])
+	}
+	
+	
+	blk.Difficulty = difficulty
+	blk.Generation = 0
+	blk.Data = ""
+	blk.PrevHash = arr
+
+	return *blk
 }
 
 // Create new block to follow this block, with provided data.
