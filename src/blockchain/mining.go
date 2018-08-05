@@ -1,5 +1,6 @@
 package blockchain
 
+/*
 type miningWorker struct {
 	// TODO. Should implement work_queue.Worker
 }
@@ -26,3 +27,4 @@ func (blk *Block) Mine(workers uint64) bool {
 	}
 	return mr.Found
 }
+*/
