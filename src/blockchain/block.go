@@ -44,12 +44,10 @@ func (prev_block Block) Next(data string) Block {
 func (blk Block) CalcHash() []byte {
 	//create string
 	str := fmt.Sprintf("%x:%d:%d:%s:%d", blk.PrevHash, blk.Generation, blk.Difficulty, blk.Data, blk.Proof)
-	fmt.Println(str)
 
 	//hash the string
 	h := sha256.New()
 	h.Write([]byte(str))
-	fmt.Printf("Hash: %x\n", h.Sum(nil))
 
 	//return hashed string
 	return h.Sum(nil)
@@ -57,9 +55,9 @@ func (blk Block) CalcHash() []byte {
 
 // Is this block's hash valid?
 func (blk Block) ValidHash() bool {
-	end := blk.Hash[len(blk.Hash)-int(blk.Difficulty)*2:]
+	end := blk.Hash[len(blk.Hash)-int(blk.Difficulty):]
 	for i := range end {
-		if end[i] != '0' {
+		if end[i] != 0 {
 			return false
 		}
 	}

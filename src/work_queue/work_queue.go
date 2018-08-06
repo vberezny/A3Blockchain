@@ -14,7 +14,6 @@ type WorkQueue struct {
 // Create a new work queue capable of doing nWorkers simultaneous tasks, expecting to queue maxJobs tasks.
 func Create(nWorkers uint, maxJobs uint) *WorkQueue {
 	q := new(WorkQueue)
-	// TODO: initialize struct; start nWorkers workers as goroutines
 	q.Jobs = make(chan Worker, maxJobs)
 	q.Results = make(chan interface{})
 	q.StopRequests = make(chan int, nWorkers)
@@ -30,12 +29,8 @@ func (queue WorkQueue) worker() {
 	running := true
 	// Run tasks from the Jobs channel, unless we have been asked to stop.
 	for running {
-		// TODO: listen on the .Jobs channel for incoming tasks
 		tasks := <-queue.Jobs
-		// TODO: run tasks by calling .Run()
-		// TODO: send the return value back on Results channel
 		queue.Results <- tasks.Run()
-		// TODO: exit (return) when a signal is sent on StopRequests
 		if len(queue.StopRequests) > 0 {
 			<-queue.StopRequests
 			running = false
@@ -44,13 +39,13 @@ func (queue WorkQueue) worker() {
 	}
 }
 
+// put the work into the Jobs channel so a worker can find it and start the task.
 func (queue WorkQueue) Enqueue(work Worker) {
-	// TODO: put the work into the Jobs channel so a worker can find it and start the task.
 	queue.Jobs <- work
 }
 
+// tell workers to stop processing tasks.
 func (queue WorkQueue) Shutdown() {
-	// TODO: tell workers to stop processing tasks.
 	for i := uint(0); i < queue.NumWorkers; i++ {
 		queue.StopRequests <- 1
 	}
