@@ -20,14 +20,6 @@ func Initial(difficulty uint8) Block {
 
 	arr := make([]byte, 32)
 
-	/*for i := 0; i < 32; i++ {
-		arr[i] = 0
-	}*/
-
-	if arr[31] == '\x00' {
-		fmt.Println("YES")
-	}
-
 	blk.Difficulty = difficulty
 	blk.Generation = 0
 	blk.Data = ""
@@ -63,10 +55,15 @@ func (blk Block) CalcHash() []byte {
 	return h.Sum(nil)
 }
 
-/*
 // Is this block's hash valid?
 func (blk Block) ValidHash() bool {
-	// TODO
+	end := blk.Hash[len(blk.Hash)-int(blk.Difficulty)*2:]
+	for i := range end {
+		if end[i] != '0' {
+			return false
+		}
+	}
+	return true
 }
 
 // Set the proof-of-work and calculate the block's "true" hash.
@@ -74,4 +71,3 @@ func (blk *Block) SetProof(proof uint64) {
 	blk.Proof = proof
 	blk.Hash = blk.CalcHash()
 }
-*/

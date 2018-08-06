@@ -37,3 +37,16 @@ func TestCalcHash(t *testing.T) {
 		t.Error("Initial hash is incorrect\nRecieved Hash: ", hash)
 	}
 }
+
+func TestValid(t *testing.T) {
+	testBlock := Initial(2)
+	testBlock.Hash = []byte("29528aaf90e167b2dc248587718caab237a81fd25619a5b18be4986f75f30000")
+
+	if testBlock.ValidHash() == false {
+		t.Error("ValidHash() returned false, should have been true")
+	}
+	testBlock.Hash = []byte("29528aaf90e167b2dc248587718caab237a81fd25619a5b18be4986f75f30001")
+	if testBlock.ValidHash() == true {
+		t.Error("ValidHash() returned true, should have been false")
+	}
+}
