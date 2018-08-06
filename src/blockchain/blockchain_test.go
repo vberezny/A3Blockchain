@@ -2,7 +2,6 @@ package blockchain
 
 import (
 	"encoding/hex"
-	"fmt"
 	"testing"
 )
 
@@ -32,5 +31,9 @@ func TestInitial(t *testing.T) {
 func TestCalcHash(t *testing.T) {
 	testBlock := Initial(2)
 	testBlock.Proof = 242278
-	fmt.Println(hex.EncodeToString(testBlock.CalcHash()))
+	hash := hex.EncodeToString(testBlock.CalcHash())
+	//test first string
+	if hash != "29528aaf90e167b2dc248587718caab237a81fd25619a5b18be4986f75f30000" {
+		t.Error("Initial hash is incorrect\nRecieved Hash: ", hash)
+	}
 }

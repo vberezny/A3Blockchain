@@ -2,7 +2,6 @@ package blockchain
 
 import (
 	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
 )
 
@@ -21,8 +20,12 @@ func Initial(difficulty uint8) Block {
 
 	arr := make([]byte, 32)
 
-	for i := 0; i < 32; i++ {
-		arr[i] = '\x00'
+	/*for i := 0; i < 32; i++ {
+		arr[i] = 0
+	}*/
+
+	if arr[31] == '\x00' {
+		fmt.Println("YES")
 	}
 
 	blk.Difficulty = difficulty
@@ -47,23 +50,14 @@ func (prev_block Block) Next(data string) Block {
 
 // Calculate the block's hash.
 func (blk Block) CalcHash() []byte {
-	//create hash string out of block fields
-	str := hex.EncodeToString(blk.PrevHash)
-	str += ":"
-	str += string(blk.Generation)
-	str += ":"
-	str += string(blk.Difficulty)
-	str += ":"
-	str += blk.Data
-	str += ":"
-	str += string(blk.Proof)
-
-	fmt.Println([]byte(str))
+	//create string
+	str := fmt.Sprintf("%x:%d:%d:%s:%d", blk.PrevHash, blk.Generation, blk.Difficulty, blk.Data, blk.Proof)
+	fmt.Println(str)
 
 	//hash the string
 	h := sha256.New()
 	h.Write([]byte(str))
-	fmt.Printf("%x\n", h.Sum(nil))
+	fmt.Printf("Hash: %x\n", h.Sum(nil))
 
 	//return hashed string
 	return h.Sum(nil)
